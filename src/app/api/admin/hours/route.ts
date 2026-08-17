@@ -46,10 +46,16 @@ function getAdminPassword() {
 
 export async function GET() {
   const storage = await getHoursStorageInfo();
+  const blobConfigured = Boolean(
+    process.env.BLOB_READ_WRITE_TOKEN ||
+      process.env.BLOB_STORE_ID ||
+      Object.keys(process.env).some((key) => key.endsWith("_READ_WRITE_TOKEN")),
+  );
 
   return NextResponse.json({
     ok: true,
     ...storage,
+    blobConfigured,
   });
 }
 

@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { get, put } from "@vercel/blob";
 import { promises as fs } from "fs";
 import path from "path";
 import { defaultHoursSettings } from "@/config/business";
@@ -6,7 +6,7 @@ import type { HoursSettings } from "@/lib/shopHours";
 import { isValidHoursSettings } from "@/lib/shopHours";
 
 const hoursFilePath = path.join(process.cwd(), "data", "hours.json");
-const BLOB_NAME = "shop-hours.json";
+const BLOB_PATHNAME = "shop-hours.json";
 
 export class HoursStorageError extends Error {
   constructor(message: string) {
@@ -15,8 +15,32 @@ export class HoursStorageError extends Error {
   }
 }
 
+type BlobClientOptions = {
+  token?: string;
+  storeId?: string;
+};
+
+/** Vercel may use BLOB_READ_WRITE_TOKEN or a store-specific *_READ_WRITE_TOKEN */
+function getBlobClientOptions(): BlobClientOptions | null {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    return { token: process.env.BLOB_READ_WRITE_TOKEN };
+  }
+
+  for (const [key, value] of Object.entries(process.env)) {
+    if (key.endsWith("_READ_WRITE_TOKEN") && value) {
+      return { token: value };
+    }
+  }
+
+  if (process.env.BLOB_STORE_ID) {
+    return { storeId: process.env.BLOB_STORE_ID };
+  }
+
+  return null;
+}
+
 function hasBlobStorage() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  return getBlobClientOptions() !== null;
 }
 
 function getJsonBinConfig() {
@@ -28,42 +52,60 @@ function getJsonBinConfig() {
   return { apiKey, binId };
 }
 
+async function streamToText(stream: ReadableStream<Uint8Array>) {
+  return new Response(stream).text();
+}
+
 async function readHoursFromBlob(): Promise<HoursSettings | null> {
-  if (!hasBlobStorage()) return null;
+  const blobOptions = getBlobClientOptions();
+  if (!blobOptions) return null;
 
   try {
-    const { blobs } = await list({ prefix: BLOB_NAME, limit: 1 });
-    const blob = blobs.find((item) => item.pathname === BLOB_NAME) ?? blobs[0];
+    const result = await get(BLOB_PATHNAME, {
+      ...blobOptions,
+      access: "private",
+      useCache: false,
+    });
 
-    if (!blob?.url) return null;
+    if (!result || result.statusCode !== 200 || !result.stream) {
+      return null;
+    }
 
-    const response = await fetch(blob.url, { cache: "no-store" });
-    if (!response.ok) return null;
+    const raw = await streamToText(result.stream);
+    const parsed: unknown = JSON.parse(raw);
 
-    const parsed: unknown = await response.json();
     if (isValidHoursSettings(parsed)) {
       return parsed;
     }
-  } catch {
-    // Fall through to other storage.
+  } catch (error) {
+    console.error("Vercel Blob read failed:", error);
   }
 
   return null;
 }
 
 async function writeHoursToBlob(settings: HoursSettings) {
-  if (!hasBlobStorage()) return false;
+  const blobOptions = getBlobClientOptions();
+  if (!blobOptions) {
+    return false;
+  }
 
   try {
-    await put(BLOB_NAME, JSON.stringify(settings), {
-      access: "public",
+    await put(BLOB_PATHNAME, JSON.stringify(settings), {
+      ...blobOptions,
+      access: "private",
       addRandomSuffix: false,
       allowOverwrite: true,
       contentType: "application/json",
     });
     return true;
-  } catch {
-    return false;
+  } catch (error) {
+    console.error("Vercel Blob write failed:", error);
+
+    const message =
+      error instanceof Error ? error.message : "Unknown Vercel Blob error";
+
+    throw new HoursStorageError(`Could not save to Vercel Blob: ${message}`);
   }
 }
 
@@ -88,8 +130,8 @@ async function readHoursFromJsonBin(): Promise<HoursSettings | null> {
     if (body.record && isValidHoursSettings(body.record)) {
       return body.record;
     }
-  } catch {
-    // Fall through to file/default.
+  } catch (error) {
+    console.error("JSONBin read failed:", error);
   }
 
   return null;
@@ -99,16 +141,21 @@ async function writeHoursToJsonBin(settings: HoursSettings) {
   const config = getJsonBinConfig();
   if (!config) return false;
 
-  const response = await fetch(`https://api.jsonbin.io/v3/b/${config.binId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Master-Key": config.apiKey,
-    },
-    body: JSON.stringify(settings),
-  });
+  try {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${config.binId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": config.apiKey,
+      },
+      body: JSON.stringify(settings),
+    });
 
-  return response.ok;
+    return response.ok;
+  } catch (error) {
+    console.error("JSONBin write failed:", error);
+    return false;
+  }
 }
 
 async function readHoursFromFile(): Promise<HoursSettings | null> {
@@ -145,21 +192,32 @@ export async function writeHoursSettings(settings: HoursSettings) {
     updatedAt: new Date().toISOString(),
   };
 
-  if (await writeHoursToBlob(payload)) return;
+  if (hasBlobStorage()) {
+    await writeHoursToBlob(payload);
+    return;
+  }
+
   if (await writeHoursToJsonBin(payload)) return;
 
   try {
     await fs.mkdir(path.dirname(hoursFilePath), { recursive: true });
     await fs.writeFile(hoursFilePath, JSON.stringify(payload, null, 2), "utf8");
-  } catch {
+  } catch (error) {
+    console.error("Local file write failed:", error);
     throw new HoursStorageError(
-      "Live site save needs Vercel Blob (recommended): Vercel project → Storage → Blob → Connect → Redeploy.",
+      "Could not save hours. On the live site, connect Vercel Blob to this project and redeploy.",
     );
   }
 }
 
 export async function getHoursStorageInfo() {
-  if (hasBlobStorage()) return { type: "blob" as const, canSaveOnLive: true };
-  if (getJsonBinConfig()) return { type: "jsonbin" as const, canSaveOnLive: true };
+  if (hasBlobStorage()) {
+    return { type: "blob" as const, canSaveOnLive: true };
+  }
+
+  if (getJsonBinConfig()) {
+    return { type: "jsonbin" as const, canSaveOnLive: true };
+  }
+
   return { type: "file" as const, canSaveOnLive: false };
 }
