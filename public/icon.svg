@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-label="DD's icon">
+  <rect width="512" height="512" rx="120" fill="#111111"/>
+  <path
+    d="M256 76c-34 42-76 94-76 154 0 42 34 76 76 76s76-34 76-76c0-60-42-112-76-154Z"
+    fill="#FFFFFF"
+  />
+  <path
+    d="M256 248c-16 24-42 42-42 68 0 22 18 40 42 40s42-18 42-40c0-26-26-44-42-68Z"
+    fill="#F97316"
+  />
+  <text
+    x="256"
+    y="418"
+    text-anchor="middle"
+    fill="#FFFFFF"
+    font-family="Georgia, serif"
+    font-size="92"
+    font-weight="700"
+  >
+    DD&apos;s
+  </text>
+</svg>

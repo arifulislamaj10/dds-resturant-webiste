@@ -2,25 +2,49 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --brand-black: #000000;
+  --brand-white: #ffffff;
+  --brand-flame: #ff4500;
+  --brand-flame-dark: #e03e00;
+  --brand-flame-light: #ff6b35;
+  --brand-muted: #f7f7f7;
+  --brand-muted-warm: #fff5f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-black: var(--brand-black);
+  --color-brand-white: var(--brand-white);
+  --color-brand-flame: var(--brand-flame);
+  --color-brand-flame-dark: var(--brand-flame-dark);
+  --color-brand-flame-light: var(--brand-flame-light);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-muted-warm: var(--brand-muted-warm);
+  --font-sans: Arial, Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #ff4500;
+  color: #ffffff;
 }
