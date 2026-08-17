@@ -106,15 +106,6 @@ export const heroSlides: HeroSlide[] = [
     orderItem: "Combo 11 - Chao Fan Pork Chop w/ Spam & Egg",
   },
   {
-    id: "chao-fan-pork-chop",
-    image: images.porkChopMeal,
-    tag: "Popular",
-    title: "Chao Fan Pork Chop",
-    description: "Fried rice with breaded pork chop.",
-    price: "₱109",
-    orderItem: "Chao Fan Pork Chop",
-  },
-  {
     id: "combo-overload",
     image: images.cheesyRicePlatter,
     tag: "Heavy meal",

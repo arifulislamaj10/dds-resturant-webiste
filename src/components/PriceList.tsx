@@ -5,18 +5,27 @@ import {
   type PriceListItem,
 } from "@/config/priceList";
 import { siteConfig } from "@/config/site";
+import { getMessengerOrderUrl } from "@/lib/utils";
 
 function MenuImageDisplay() {
   return (
     <div className="overflow-hidden rounded-3xl border border-stone-200 bg-black shadow-xl">
-      <Image
-        src={priceListSettings.menuImage}
-        alt={priceListSettings.menuImageAlt}
-        width={1200}
-        height={1600}
-        className="h-auto w-full"
-        priority
-      />
+      <a
+        href={getMessengerOrderUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Order from menu on Messenger"
+        className="block cursor-pointer transition active:opacity-90"
+      >
+        <Image
+          src={priceListSettings.menuImage}
+          alt={priceListSettings.menuImageAlt}
+          width={1200}
+          height={1600}
+          className="h-auto w-full"
+          priority
+        />
+      </a>
       <div className="flex flex-col gap-3 border-t border-stone-800 bg-black px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div>
           <p className="text-sm font-semibold text-brand-flame-light">

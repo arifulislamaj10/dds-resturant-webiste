@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { completedBulkOrders } from "@/config/site";
+import { getMessengerOrderUrl } from "@/lib/utils";
 
 export function BulkOrders() {
   return (
@@ -18,9 +19,13 @@ export function BulkOrders() {
 
         <div className="mt-8 grid gap-5 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {completedBulkOrders.map((order) => (
-            <article
+            <a
               key={order.id}
-              className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl"
+              href={getMessengerOrderUrl(`Bulk order: ${order.title}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Message about bulk order: ${order.title}`}
+              className="block overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.99] sm:rounded-3xl"
             >
               <div className="relative aspect-[16/10]">
                 <Image
@@ -51,7 +56,7 @@ export function BulkOrders() {
                   {order.description}
                 </p>
               </div>
-            </article>
+            </a>
           ))}
         </div>
 

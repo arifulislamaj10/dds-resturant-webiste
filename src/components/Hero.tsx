@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { useShopStatus } from "@/hooks/useShopStatus";
 import { heroSlides } from "@/config/site";
+import { getMessengerOrderUrl } from "@/lib/utils";
 
 const AUTO_PLAY_MS = 5000;
 
@@ -40,10 +41,16 @@ export function Hero() {
       {/* Food image — top on mobile, full background on desktop */}
       <div className="relative h-[42vh] min-h-[220px] max-h-[340px] shrink-0 pt-14 sm:h-[44vh] sm:max-h-[380px] sm:pt-16 lg:absolute lg:inset-0 lg:h-full lg:max-h-none lg:pt-0">
         {heroSlides.map((item, index) => (
-          <div
+          <a
             key={item.id}
+            href={getMessengerOrderUrl(item.orderItem)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Order ${item.title} on Messenger`}
             className={`absolute inset-0 transition-opacity duration-700 ${
-              index === activeIndex ? "opacity-100" : "opacity-0"
+              index === activeIndex
+                ? "pointer-events-auto cursor-pointer opacity-100"
+                : "pointer-events-none opacity-0"
             }`}
             aria-hidden={index !== activeIndex}
           >
@@ -55,7 +62,7 @@ export function Hero() {
               sizes="100vw"
               className="object-cover object-center lg:object-center"
             />
-          </div>
+          </a>
         ))}
 
         {/* Mobile: light bottom fade into content */}
@@ -101,7 +108,15 @@ export function Hero() {
             San Agustin, San Fernando, Pampanga
           </p>
 
-          <div className="mt-4 sm:mt-6">
+          <div className="mt-4 flex flex-wrap gap-3 sm:mt-6">
+            <a
+              href={getMessengerOrderUrl(slide.orderItem)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-brand-flame px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-flame-light sm:min-h-11 sm:px-6 sm:py-3 sm:text-base"
+            >
+              Order this
+            </a>
             <a
               href="#menu"
               className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/30 bg-black/40 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:border-brand-flame hover:text-brand-flame-light sm:min-h-11 sm:px-6 sm:py-3 sm:text-base"

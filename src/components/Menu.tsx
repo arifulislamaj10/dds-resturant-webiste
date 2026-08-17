@@ -7,6 +7,7 @@ import {
   menuItems,
   type MenuCategory,
 } from "@/config/priceList";
+import { getMessengerOrderUrl } from "@/lib/utils";
 
 export function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory | "all">(
@@ -27,8 +28,8 @@ export function Menu() {
             Choose what you want
           </h2>
           <p className="mt-3 text-base leading-relaxed text-stone-600">
-            Same prices as our official price list above. Pick a dish below,
-            then use the Order button at the bottom right when you are ready.
+            Tap any dish photo to order on Messenger. Same prices as our official
+            price list above.
           </p>
         </div>
 
@@ -62,9 +63,13 @@ export function Menu() {
 
         <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {filteredItems.map((item) => (
-            <article
+            <a
               key={item.id}
-              className="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl"
+              href={getMessengerOrderUrl(item.name)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Order ${item.name} on Messenger`}
+              className="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.99] sm:rounded-3xl"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
@@ -74,6 +79,11 @@ export function Menu() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition duration-500 group-hover:scale-105"
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-2 opacity-0 transition group-hover:opacity-100 group-active:opacity-100 sm:opacity-0">
+                  <p className="text-center text-xs font-semibold text-white sm:text-sm">
+                    Tap to order
+                  </p>
+                </div>
                 <div className="absolute left-3 top-3 flex gap-2">
                   {item.popular && (
                     <span className="rounded-full bg-brand-flame px-2.5 py-1 text-xs font-semibold text-white">
@@ -100,8 +110,11 @@ export function Menu() {
                 <p className="mt-2 text-sm leading-relaxed text-stone-600">
                   {item.description}
                 </p>
+                <p className="mt-3 text-sm font-semibold text-brand-flame">
+                  Tap to order on Messenger →
+                </p>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>
