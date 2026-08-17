@@ -11,8 +11,24 @@ type AdminStatus = {
   message: string;
 };
 
+type SaveResponse = {
+  ok?: boolean;
+  error?: string;
+  storageReady?: boolean;
+  status?: AdminStatus;
+  updatedAt?: string;
+};
+
 const HOURS = Array.from({ length: 12 }, (_, index) => String(index + 1));
 const MINUTES = ["00", "15", "30", "45"];
+
+async function readApiJson(response: Response): Promise<SaveResponse> {
+  try {
+    return (await response.json()) as SaveResponse;
+  } catch {
+    return {};
+  }
+}
 
 export function AdminPanel() {
   const [password, setPassword] = useState("");
@@ -30,6 +46,7 @@ export function AdminPanel() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [storageReady, setStorageReady] = useState(true);
 
   useEffect(() => {
     const savedPassword = sessionStorage.getItem("dds-admin-password");
@@ -39,7 +56,22 @@ export function AdminPanel() {
     }
 
     void loadCurrentHours();
+    void loadAdminInfo();
   }, []);
+
+  async function loadAdminInfo() {
+    try {
+      const response = await fetch("/api/admin/hours", { cache: "no-store" });
+      if (!response.ok) return;
+
+      const data = await readApiJson(response);
+      if (typeof data.storageReady === "boolean") {
+        setStorageReady(data.storageReady);
+      }
+    } catch {
+      // Ignore — save will show a clearer error if needed.
+    }
+  }
 
   async function loadCurrentHours() {
     try {
@@ -89,10 +121,10 @@ export function AdminPanel() {
         }),
       });
 
-      const data = await response.json();
+      const data = await readApiJson(response);
 
       if (!response.ok) {
-        setError(data.error ?? "Login failed.");
+        setError(data.error ?? `Save failed (${response.status}).`);
         return;
       }
 
@@ -105,7 +137,7 @@ export function AdminPanel() {
       setUpdatedAt(data.updatedAt ?? null);
       setMessage("Saved. Your website is updated.");
     } catch {
-      setError("Could not connect. Try again.");
+      setError("Network error. Check internet and try again.");
     } finally {
       setSaving(false);
     }
@@ -133,10 +165,10 @@ export function AdminPanel() {
         }),
       });
 
-      const data = await response.json();
+      const data = await readApiJson(response);
 
       if (!response.ok) {
-        setError(data.error ?? "Could not save.");
+        setError(data.error ?? `Could not save (${response.status}).`);
         if (response.status === 401) setLoggedIn(false);
         return;
       }
@@ -145,7 +177,7 @@ export function AdminPanel() {
       setUpdatedAt(data.updatedAt ?? null);
       setMessage("Saved. Your website is updated.");
     } catch {
-      setError("Could not connect. Try again.");
+      setError("Network error. Check internet and try again.");
     } finally {
       setSaving(false);
     }
@@ -168,6 +200,18 @@ export function AdminPanel() {
           Use Philippine time (Pampanga).
         </p>
       </div>
+
+      {!storageReady && (
+        <div className="mb-6 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-4 text-sm text-amber-950">
+          <p className="font-semibold">Setup needed on Vercel (one time)</p>
+          <p className="mt-2 leading-relaxed">
+            Saving does not work yet because Redis storage is not connected.
+            In Vercel: open your project → Storage → Add Redis (Upstash) →
+            Connect → Redeploy. Then save will work on{" "}
+            <strong>ddsfood.vercel.app/admin</strong>.
+          </p>
+        </div>
+      )}
 
       {status && (
         <div className="mb-6 rounded-2xl border border-stone-200 bg-brand-muted px-4 py-4">

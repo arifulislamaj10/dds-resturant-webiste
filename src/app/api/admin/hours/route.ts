@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { hoursMessages } from "@/config/business";
-import { readHoursSettings, writeHoursSettings } from "@/lib/hoursStore";
+import {
+  HoursStorageError,
+  isCloudHoursStorageReady,
+  readHoursSettings,
+  writeHoursSettings,
+} from "@/lib/hoursStore";
 import {
   formatTime12h,
   getShopStatusFromSettings,
@@ -40,62 +45,85 @@ function getAdminPassword() {
 }
 
 export async function GET() {
-  return NextResponse.json({ ok: false, error: "Use POST to save hours." }, { status: 405 });
+  return NextResponse.json(
+    {
+      ok: true,
+      storageReady: isCloudHoursStorageReady(),
+      passwordConfigured: Boolean(process.env.ADMIN_PASSWORD),
+    },
+    { status: 200 },
+  );
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json()) as AdminHoursBody;
+  try {
+    const body = (await request.json()) as AdminHoursBody;
 
-  if (body.password !== getAdminPassword()) {
-    return NextResponse.json({ ok: false, error: "Wrong password." }, { status: 401 });
-  }
+    if (body.password !== getAdminPassword()) {
+      return NextResponse.json({ ok: false, error: "Wrong password." }, { status: 401 });
+    }
 
-  const openTime =
-    body.openTime ??
-    (body.openHour && body.openMinute && body.openPeriod
-      ? buildTime12h(body.openHour, body.openMinute, body.openPeriod)
-      : null);
+    const openTime =
+      body.openTime ??
+      (body.openHour && body.openMinute && body.openPeriod
+        ? buildTime12h(body.openHour, body.openMinute, body.openPeriod)
+        : null);
 
-  const closeTime =
-    body.closeTime ??
-    (body.closeHour && body.closeMinute && body.closePeriod
-      ? buildTime12h(body.closeHour, body.closeMinute, body.closePeriod)
-      : null);
+    const closeTime =
+      body.closeTime ??
+      (body.closeHour && body.closeMinute && body.closePeriod
+        ? buildTime12h(body.closeHour, body.closeMinute, body.closePeriod)
+        : null);
 
-  if (typeof body.sellingToday !== "boolean" || !openTime || !closeTime) {
+    if (typeof body.sellingToday !== "boolean" || !openTime || !closeTime) {
+      return NextResponse.json(
+        { ok: false, error: "Missing or invalid shop hours." },
+        { status: 400 },
+      );
+    }
+
+    if (!parseTime12h(openTime) || !parseTime12h(closeTime)) {
+      return NextResponse.json(
+        { ok: false, error: "Time format must be like 10:00 AM." },
+        { status: 400 },
+      );
+    }
+
+    const nextSettings = {
+      sellingToday: body.sellingToday,
+      openTime,
+      closeTime,
+    };
+
+    if (!isValidHoursSettings(nextSettings)) {
+      return NextResponse.json(
+        { ok: false, error: "Could not save hours." },
+        { status: 400 },
+      );
+    }
+
+    await writeHoursSettings(nextSettings);
+    const saved = await readHoursSettings();
+    const status = getShopStatusFromSettings(saved, hoursMessages);
+
+    return NextResponse.json({
+      ok: true,
+      ...saved,
+      status,
+    });
+  } catch (error) {
+    if (error instanceof HoursStorageError) {
+      return NextResponse.json({ ok: false, error: error.message }, { status: 503 });
+    }
+
+    console.error("Admin hours save failed:", error);
     return NextResponse.json(
-      { ok: false, error: "Missing or invalid shop hours." },
-      { status: 400 },
+      {
+        ok: false,
+        error:
+          "Server error while saving. If you use Vercel, connect Redis storage and redeploy.",
+      },
+      { status: 500 },
     );
   }
-
-  if (!parseTime12h(openTime) || !parseTime12h(closeTime)) {
-    return NextResponse.json(
-      { ok: false, error: "Time format must be like 10:00 AM." },
-      { status: 400 },
-    );
-  }
-
-  const nextSettings = {
-    sellingToday: body.sellingToday,
-    openTime,
-    closeTime,
-  };
-
-  if (!isValidHoursSettings(nextSettings)) {
-    return NextResponse.json(
-      { ok: false, error: "Could not save hours." },
-      { status: 400 },
-    );
-  }
-
-  await writeHoursSettings(nextSettings);
-  const saved = await readHoursSettings();
-  const status = getShopStatusFromSettings(saved, hoursMessages);
-
-  return NextResponse.json({
-    ok: true,
-    ...saved,
-    status,
-  });
 }
