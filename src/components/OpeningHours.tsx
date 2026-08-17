@@ -1,23 +1,26 @@
-import { businessSettings, getShopStatus } from "@/config/business";
+"use client";
+
+import { businessSettings } from "@/config/business";
+import { useShopStatus } from "@/hooks/useShopStatus";
 
 export function OpeningHours() {
-  const status = getShopStatus();
+  const { status, settings } = useShopStatus();
 
   return (
     <section id="hours" className="border-b border-stone-200 bg-white py-8 sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-          <div>
+          <div className="max-w-xl">
             <p className="text-sm font-semibold text-brand-flame">Open hours</p>
             <h2 className="mt-2 text-2xl font-bold text-brand-black sm:text-3xl">
-              When we accept orders
+              Today only
             </h2>
             <p className="mt-2 text-sm text-stone-600 sm:text-base">
               {businessSettings.hoursNote}
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center lg:flex-col lg:items-end">
+          <div className="flex flex-col gap-3 sm:items-end">
             <span
               className={`inline-flex w-fit items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${
                 status.showOpenBadge
@@ -38,40 +41,30 @@ export function OpeningHours() {
               />
               {status.label}
             </span>
-            <p className="text-base font-bold text-brand-black lg:text-right">
-              {businessSettings.todayHours}
-            </p>
           </div>
         </div>
 
-        {!status.canOrder && (
-          <div
-            className={`mt-4 rounded-xl px-4 py-3 text-sm ${
-              status.mode === "unavailable"
-                ? "bg-red-50 text-red-800"
-                : "bg-stone-100 text-stone-700"
-            }`}
-          >
-            {status.message}
-          </div>
-        )}
-
-        <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          {businessSettings.schedule.map((row) => (
-            <div
-              key={row.day}
-              className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm ${
-                row.closed
-                  ? "border-stone-200 bg-stone-100 text-stone-500"
-                  : "border-stone-200 bg-brand-muted"
-              }`}
-            >
-              <span className="font-semibold text-brand-black">{row.day}</span>
-              <span className={row.closed ? "font-medium" : "text-stone-600"}>
-                {row.time}
-              </span>
-            </div>
-          ))}
+        <div
+          className={`mt-6 rounded-2xl border px-5 py-5 sm:px-6 sm:py-6 ${
+            status.mode === "open"
+              ? "border-green-200 bg-green-50"
+              : status.mode === "unavailable"
+                ? "border-red-200 bg-red-50"
+                : "border-stone-200 bg-brand-muted"
+          }`}
+        >
+          <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
+            Today
+          </p>
+          <p className="mt-1 text-2xl font-bold text-brand-black sm:text-3xl">
+            {status.todayHours}
+          </p>
+          {settings.sellingToday && (
+            <p className="mt-2 text-base text-stone-600">
+              Open {settings.openTime} · Close {settings.closeTime}
+            </p>
+          )}
+          <p className="mt-3 text-sm text-stone-600">{status.message}</p>
         </div>
       </div>
     </section>

@@ -1,10 +1,10 @@
 "use client";
 
-import { getShopStatus } from "@/config/business";
+import { useShopStatus } from "@/hooks/useShopStatus";
 import { getMessengerOrderUrl } from "@/lib/utils";
 
 export function MessengerButton() {
-  const status = getShopStatus();
+  const { status } = useShopStatus();
   const isOrdering = status.canOrder;
 
   return (

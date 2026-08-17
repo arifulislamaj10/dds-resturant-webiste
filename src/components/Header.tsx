@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Logo, LogoLight } from "@/components/Logo";
 
 const navLinks = [
+  { href: "#price-list", label: "Prices" },
   { href: "#menu", label: "Menu" },
   { href: "#hours", label: "Hours" },
   { href: "#fresh-today", label: "Updates" },

@@ -6,7 +6,7 @@ import {
   menuCategories,
   menuItems,
   type MenuCategory,
-} from "@/config/site";
+} from "@/config/priceList";
 
 export function Menu() {
   const [activeCategory, setActiveCategory] = useState<MenuCategory | "all">(
@@ -27,8 +27,8 @@ export function Menu() {
             Choose what you want
           </h2>
           <p className="mt-3 text-base leading-relaxed text-stone-600">
-            Pick a dish below. Use the Order button at the bottom right when
-            you are ready.
+            Same prices as our official price list above. Pick a dish below,
+            then use the Order button at the bottom right when you are ready.
           </p>
         </div>
 

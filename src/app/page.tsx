@@ -11,22 +11,22 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Menu } from "@/components/Menu";
 import { MessengerButton } from "@/components/MessengerButton";
 import { OpeningHours } from "@/components/OpeningHours";
+import { PriceList } from "@/components/PriceList";
 import { FacebookUpdates } from "@/components/FacebookUpdates";
 import { SocialProofStrip } from "@/components/SocialProofStrip";
+import { MainShell } from "@/components/MainShell";
 import { Testimonials } from "@/components/Testimonials";
-import { getShopStatus } from "@/config/business";
 
 export default function Home() {
-  const shopStatus = getShopStatus();
-
   return (
     <>
       <Header />
       <AvailabilityBanner />
-      <main className={`pb-4 ${shopStatus.mode !== "open" ? "pt-10 sm:pt-11" : ""}`}>
+      <MainShell>
         <Hero />
         <SocialProofStrip />
         <OpeningHours />
+        <PriceList />
         <About />
         <FacebookUpdates />
         <Menu />
@@ -36,7 +36,7 @@ export default function Home() {
         <Testimonials />
         <CommunityCTA />
         <FAQ />
-      </main>
+      </MainShell>
       <Footer />
       <MessengerButton />
     </>

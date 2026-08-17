@@ -3,7 +3,7 @@ export const images = {
   cheesySpicyCarbonara: "/images/koriyaencheche-noodles.jpg",
   samyangOmelette: "/images/chessycorian.jpg",
   dynamiteLumpia: "/images/dainamite.jpg",
-  porkChopMeal: "/images/richwitheggchicken.jpg",
+  porkChopMeal: "/images/chao-fan-pork-chop.jpg",
   cheesyRicePlatter: "/images/richeegee.jpg",
   bulkNoodles: "/images/balkorder.jpg",
   dynamiteTray: "/images/dainimte.jpg",
@@ -15,10 +15,11 @@ export const siteConfig = {
   name: "DD's",
   tagline: "Homemade food delivery in San Fernando, Pampanga",
   description:
-    "DD's sells pasta, omelette, fries, and snacks. Order on Facebook Messenger. We deliver around San Fernando through Lalamove or Maxim.",
+    "DD's sells chao fan, combo meals, pasta, omelette, and fries. Order on Facebook Messenger. We deliver around San Fernando through Lalamove or Maxim.",
   url: "https://www.facebook.com/profile.php?id=100069057264213",
   locale: "en_PH",
-  phone: "",
+  phone: "09335167640",
+  phoneAlt: "09948504295",
   email: "madamshai92@gmail.com",
   address: {
     area: "San Agustin",
@@ -82,8 +83,8 @@ export const heroSlides: HeroSlide[] = [
     image: images.cheesySpicyCarbonara,
     tag: "Best seller",
     title: "Cheesy Spicy Carbonara",
-    description: "Korean cheese noodles with creamy sauce, fries, and spam.",
-    price: "₱149",
+    description: "Spicy noodles with cheese sauce. Spiciness: 0%, 50%, or 100%.",
+    price: "₱140",
     orderItem: "Cheesy Spicy Carbonara",
   },
   {
@@ -92,145 +93,44 @@ export const heroSlides: HeroSlide[] = [
     tag: "Customer favorite",
     title: "Samyang Omelette",
     description: "Omelette filled with noodles, cheese sauce, and toppings.",
-    price: "₱139",
+    price: "₱165",
     orderItem: "Samyang Omelette",
   },
   {
-    id: "dynamite-lumpia",
-    image: images.dynamiteLumpia,
-    tag: "Spicy snack",
-    title: "Dynamite Lumpia",
-    description: "Crispy fried chili rolls with cheese and ham.",
-    price: "₱99",
-    orderItem: "Dynamite Lumpia",
-  },
-  {
-    id: "pork-chop-meal",
+    id: "combo-11",
     image: images.porkChopMeal,
-    tag: "Heavy meal",
-    title: "Pork Chop Rice Meal",
-    description: "Fried pork chop with egg and rice. Big serving.",
-    price: "₱129",
-    orderItem: "Pork Chop Rice Meal",
-  },
-  {
-    id: "cheesy-rice-platter",
-    image: images.cheesyRicePlatter,
-    tag: "Good for sharing",
-    title: "Cheesy Rice Platter",
-    description: "Rice with egg, longganisa, spam, and sausage.",
-    price: "₱139",
-    orderItem: "Cheesy Rice Platter",
-  },
-  {
-    id: "dynamite-party-tray",
-    image: images.dynamiteTray,
-    tag: "For events",
-    title: "Dynamite Party Tray",
-    description: "Large tray of dynamite lumpia for parties and bulk orders.",
-    price: "₱499",
-    orderItem: "Dynamite Party Tray",
-  },
-];
-
-export type MenuCategory = "bestsellers" | "pasta" | "spicy" | "snacks";
-
-export type MenuItem = {
-  id: string;
-  name: string;
-  description: string;
-  price: string;
-  category: MenuCategory;
-  image: string;
-  popular?: boolean;
-  spicy?: boolean;
-};
-
-export const menuCategories: { id: MenuCategory; label: string }[] = [
-  { id: "bestsellers", label: "Best Sellers" },
-  { id: "pasta", label: "Pasta & Noodles" },
-  { id: "spicy", label: "Spicy" },
-  { id: "snacks", label: "Snacks & Meals" },
-];
-
-export const menuItems: MenuItem[] = [
-  {
-    id: "cheesy-spicy-carbonara",
-    name: "Cheesy Spicy Carbonara",
-    description:
-      "Korean cheese noodles with creamy sauce, fries, and spam. Our most ordered item.",
+    tag: "Best combo",
+    title: "Combo 11",
+    description: "Chao Fan Pork Chop w/ Spam & Egg",
     price: "₱149",
-    category: "bestsellers",
-    image: images.cheesySpicyCarbonara,
-    popular: true,
-    spicy: true,
+    orderItem: "Combo 11 - Chao Fan Pork Chop w/ Spam & Egg",
   },
   {
-    id: "samyang-omelette",
-    name: "Samyang Omelette",
-    description:
-      "Omelette filled with noodles, cheese sauce, and toppings. Large serving.",
-    price: "₱139",
-    category: "bestsellers",
-    image: images.samyangOmelette,
-    popular: true,
-    spicy: true,
-  },
-  {
-    id: "samyang-carbonara",
-    name: "Samyang Carbonara",
-    description: "Spicy noodles with cheese sauce. Hot and cheesy.",
-    price: "₱159",
-    category: "spicy",
-    image: images.bulkNoodles,
-    popular: true,
-    spicy: true,
-  },
-  {
-    id: "dynamite-lumpia",
-    name: "Dynamite Lumpia",
-    description:
-      "Fried chili rolls with cheese and ham. Crispy and spicy.",
-    price: "₱99",
-    category: "snacks",
-    image: images.dynamiteLumpia,
-    spicy: true,
-  },
-  {
-    id: "pork-chop-meal",
-    name: "Pork Chop Rice Meal",
-    description: "Fried pork chop with egg and rice. Heavy meal.",
-    price: "₱129",
-    category: "snacks",
+    id: "chao-fan-pork-chop",
     image: images.porkChopMeal,
+    tag: "Popular",
+    title: "Chao Fan Pork Chop",
+    description: "Fried rice with breaded pork chop.",
+    price: "₱109",
+    orderItem: "Chao Fan Pork Chop",
   },
   {
-    id: "cheesy-rice-platter",
-    name: "Cheesy Rice Platter",
-    description:
-      "Rice with egg, longganisa, spam, and sausage. Good for sharing.",
-    price: "₱139",
-    category: "snacks",
+    id: "combo-overload",
     image: images.cheesyRicePlatter,
+    tag: "Heavy meal",
+    title: "Combo Overload",
+    description: "Chao Fan, Nuggets, Hungarian, Spam, Longganisa, Egg",
+    price: "₱190",
+    orderItem: "Combo Overload",
   },
   {
-    id: "cheesy-noodles-fries",
-    name: "Cheesy Noodles with Fries",
-    description: "Noodles and fries topped with cheese sauce.",
-    price: "₱99",
-    category: "pasta",
-    image: images.cheesySpicyCarbonara,
-    spicy: true,
-  },
-  {
-    id: "dynamite-party-tray",
-    name: "Dynamite Party Tray",
-    description: "Large tray of dynamite lumpia. For groups and events.",
-    price: "₱499",
-    category: "spicy",
-    image: images.dynamiteTray,
-    popular: true,
-    spicy: true,
+    id: "combo-1",
+    image: images.cheesyRicePlatter,
+    tag: "Combo meal",
+    title: "Combo 1",
+    description: "Chao Fan, Hungarian w/ Nuggets & Egg",
+    price: "₱139",
+    orderItem: "Combo 1",
   },
 ];
 

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { getShopStatus } from "@/config/business";
+import { useShopStatus } from "@/hooks/useShopStatus";
 import { heroSlides } from "@/config/site";
 
 const AUTO_PLAY_MS = 5000;
@@ -27,7 +27,7 @@ export function Hero() {
   }, [activeIndex, isPaused, goNext]);
 
   const slide = heroSlides[activeIndex];
-  const shopStatus = getShopStatus();
+  const { status: shopStatus } = useShopStatus();
 
   return (
     <section

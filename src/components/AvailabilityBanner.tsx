@@ -1,7 +1,9 @@
-import { getShopStatus } from "@/config/business";
+"use client";
+
+import { useShopStatus } from "@/hooks/useShopStatus";
 
 export function AvailabilityBanner() {
-  const status = getShopStatus();
+  const { status } = useShopStatus();
 
   if (status.mode === "open") {
     return null;
