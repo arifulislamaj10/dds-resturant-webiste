@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { hoursMessages } from "@/config/business";
 import {
+  getHoursStorageInfo,
   HoursStorageError,
-  isCloudHoursStorageReady,
   readHoursSettings,
   writeHoursSettings,
 } from "@/lib/hoursStore";
@@ -45,14 +45,12 @@ function getAdminPassword() {
 }
 
 export async function GET() {
-  return NextResponse.json(
-    {
-      ok: true,
-      storageReady: isCloudHoursStorageReady(),
-      passwordConfigured: Boolean(process.env.ADMIN_PASSWORD),
-    },
-    { status: 200 },
-  );
+  const storage = await getHoursStorageInfo();
+
+  return NextResponse.json({
+    ok: true,
+    ...storage,
+  });
 }
 
 export async function POST(request: Request) {
@@ -118,11 +116,7 @@ export async function POST(request: Request) {
 
     console.error("Admin hours save failed:", error);
     return NextResponse.json(
-      {
-        ok: false,
-        error:
-          "Server error while saving. If you use Vercel, connect Redis storage and redeploy.",
-      },
+      { ok: false, error: "Server error while saving. Try again." },
       { status: 500 },
     );
   }

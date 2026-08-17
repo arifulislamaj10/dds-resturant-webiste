@@ -14,7 +14,6 @@ type AdminStatus = {
 type SaveResponse = {
   ok?: boolean;
   error?: string;
-  storageReady?: boolean;
   status?: AdminStatus;
   updatedAt?: string;
 };
@@ -46,7 +45,6 @@ export function AdminPanel() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
-  const [storageReady, setStorageReady] = useState(true);
 
   useEffect(() => {
     const savedPassword = sessionStorage.getItem("dds-admin-password");
@@ -56,22 +54,7 @@ export function AdminPanel() {
     }
 
     void loadCurrentHours();
-    void loadAdminInfo();
   }, []);
-
-  async function loadAdminInfo() {
-    try {
-      const response = await fetch("/api/admin/hours", { cache: "no-store" });
-      if (!response.ok) return;
-
-      const data = await readApiJson(response);
-      if (typeof data.storageReady === "boolean") {
-        setStorageReady(data.storageReady);
-      }
-    } catch {
-      // Ignore — save will show a clearer error if needed.
-    }
-  }
 
   async function loadCurrentHours() {
     try {
@@ -201,18 +184,6 @@ export function AdminPanel() {
         </p>
       </div>
 
-      {!storageReady && (
-        <div className="mb-6 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-4 text-sm text-amber-950">
-          <p className="font-semibold">Setup needed on Vercel (one time)</p>
-          <p className="mt-2 leading-relaxed">
-            Saving does not work yet because Redis storage is not connected.
-            In Vercel: open your project → Storage → Add Redis (Upstash) →
-            Connect → Redeploy. Then save will work on{" "}
-            <strong>ddsfood.vercel.app/admin</strong>.
-          </p>
-        </div>
-      )}
-
       {status && (
         <div className="mb-6 rounded-2xl border border-stone-200 bg-brand-muted px-4 py-4">
           <p className="text-sm font-semibold text-stone-500">Website shows now</p>
@@ -337,10 +308,14 @@ export function AdminPanel() {
 
       <div className="mt-8 space-y-2 text-sm text-stone-600">
         <p>
-          <strong>Closed all day:</strong> choose &quot;No, closed today&quot; and save.
+          <strong>On your computer (localhost):</strong> save works automatically.
         </p>
         <p>
-          <strong>Different hours:</strong> change open/close time and save once in the morning.
+          <strong>On live site (ddsfood.vercel.app):</strong> one-time setup in Vercel
+          → Storage → Blob → Connect → Redeploy. Then save works online too.
+        </p>
+        <p>
+          <strong>Closed all day:</strong> choose &quot;No, closed today&quot; and save.
         </p>
         <Link href="/" className="inline-block font-semibold text-brand-flame hover:underline">
           ← Back to website
