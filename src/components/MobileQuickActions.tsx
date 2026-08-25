@@ -2,12 +2,9 @@
 
 import { siteConfig } from "@/config/site";
 import { getMessengerOrderUrl, getTelUrl } from "@/lib/utils";
-import { useShopStatus } from "@/hooks/useShopStatus";
 
-/** Sticky call + order bar — mobile only, sits above the Messenger FAB. */
+/** Sticky call + order bar — mobile only. */
 export function MobileQuickActions() {
-  const { status } = useShopStatus();
-
   return (
     <div
       className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-white/95 px-4 py-3 shadow-[0_-8px_32px_rgb(0_0_0/0.08)] backdrop-blur-md sm:hidden"
@@ -27,7 +24,7 @@ export function MobileQuickActions() {
           rel="noopener noreferrer"
           className="btn-primary min-h-11 flex-[2] !py-2.5 text-sm"
         >
-          {status.canOrder ? "Order delivery" : "Message us"}
+          Order delivery
         </a>
       </div>
     </div>

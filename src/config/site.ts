@@ -102,15 +102,6 @@ export const heroSlides: HeroSlide[] = [
     orderItem: "Samyang Omelette",
   },
   {
-    id: "combo-11",
-    image: images.porkChopMeal,
-    tag: "Best combo",
-    title: "Combo 11",
-    description: "Chao Fan Pork Chop w/ Spam & Egg",
-    price: "₱149",
-    orderItem: "Combo 11 - Chao Fan Pork Chop w/ Spam & Egg",
-  },
-  {
     id: "combo-overload",
     image: images.longganisaSpam,
     tag: "Heavy meal",

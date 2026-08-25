@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { hoursMessages } from "@/config/business";
 import { readHoursSettings } from "@/lib/hoursStore";
-import { getShopStatusFromSettings } from "@/lib/shopHours";
 
+/** Public hours — times only. No open/closed status on the customer website. */
 export async function GET() {
   const settings = await readHoursSettings();
-  const status = getShopStatusFromSettings(settings, hoursMessages);
 
   return NextResponse.json({
-    ...settings,
-    status,
+    openTime: settings.openTime,
+    closeTime: settings.closeTime,
+    sellingToday: settings.sellingToday,
+    updatedAt: settings.updatedAt,
   });
 }

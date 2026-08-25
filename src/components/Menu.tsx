@@ -31,11 +31,11 @@ export function Menu() {
           </p>
         </div>
 
-        <div className="mt-8 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="scroll-chip-row mt-8">
           <button
             type="button"
             onClick={() => setActiveCategory("all")}
-            className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-bold transition ${
+            className={`min-h-11 shrink-0 rounded-full px-5 py-2.5 text-sm font-bold transition ${
               activeCategory === "all"
                 ? "bg-brand-charcoal text-white shadow-card"
                 : "bg-white text-stone-600 hover:text-brand-flame"
@@ -48,7 +48,7 @@ export function Menu() {
               key={category.id}
               type="button"
               onClick={() => setActiveCategory(category.id)}
-              className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-bold transition ${
+              className={`min-h-11 shrink-0 rounded-full px-5 py-2.5 text-sm font-bold transition ${
                 activeCategory === category.id
                   ? "bg-brand-charcoal text-white shadow-card"
                   : "bg-white text-stone-600 hover:text-brand-flame"

@@ -5,11 +5,10 @@ import { Logo, LogoLight } from "@/components/Logo";
 import { getMessengerOrderUrl } from "@/lib/utils";
 
 const navLinks = [
-  { href: "#price-list", label: "Prices" },
+  { href: "#restaurant", label: "About" },
   { href: "#menu", label: "Menu" },
-  { href: "#hours", label: "Hours" },
-  { href: "#fresh-today", label: "Updates" },
-  { href: "#bulk-orders", label: "Bulk" },
+  { href: "#price-list", label: "Prices" },
+  { href: "#delivery", label: "Delivery" },
   { href: "#reviews", label: "Reviews" },
 ];
 
@@ -46,7 +45,7 @@ export function Header() {
           {isDark ? <Logo size="sm" /> : <LogoLight size="sm" />}
         </div>
 
-        <nav className="hidden items-center gap-1 xl:flex">
+        <nav className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
@@ -75,7 +74,7 @@ export function Header() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((value) => !value)}
-          className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition xl:hidden ${
+          className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl transition lg:hidden ${
             scrolled
               ? "border border-stone-200 bg-white text-stone-700"
               : "glass-dark text-white"
@@ -102,7 +101,7 @@ export function Header() {
       </div>
 
       {open && (
-        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-brand-charcoal/98 px-4 py-4 backdrop-blur-xl xl:hidden">
+        <div className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-brand-charcoal/98 px-4 py-4 backdrop-blur-xl lg:hidden">
           <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <a

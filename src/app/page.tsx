@@ -1,5 +1,4 @@
-import { AvailabilityBanner } from "@/components/AvailabilityBanner";
-import { About } from "@/components/About";
+import { RestaurantInfo } from "@/components/RestaurantInfo";
 import { BulkOrders } from "@/components/BulkOrders";
 import { CommunityCTA } from "@/components/CommunityCTA";
 import { Delivery } from "@/components/Delivery";
@@ -11,7 +10,6 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Menu } from "@/components/Menu";
 import { MessengerButton } from "@/components/MessengerButton";
 import { MobileQuickActions } from "@/components/MobileQuickActions";
-import { OpeningHours } from "@/components/OpeningHours";
 import { PriceList } from "@/components/PriceList";
 import { FacebookUpdates } from "@/components/FacebookUpdates";
 import { SocialProofStrip } from "@/components/SocialProofStrip";
@@ -22,14 +20,12 @@ export default function Home() {
   return (
     <>
       <Header />
-      <AvailabilityBanner />
       <MainShell>
         <Hero />
         <SocialProofStrip />
-        <OpeningHours />
+        <RestaurantInfo />
         <Menu />
         <PriceList />
-        <About />
         <FacebookUpdates />
         <BulkOrders />
         <HowItWorks />

@@ -26,9 +26,11 @@ export function FAQ() {
                   type="button"
                   aria-expanded={isOpen}
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                  className="flex min-h-14 w-full items-center justify-between gap-3 px-4 py-4 text-left sm:gap-4 sm:px-5"
                 >
-                  <span className="font-semibold text-brand-black">{faq.question}</span>
+                  <span className="min-w-0 flex-1 text-left text-sm font-semibold text-brand-black sm:text-base">
+                    {faq.question}
+                  </span>
                   <span
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-muted text-lg font-light text-brand-flame transition ${
                       isOpen ? "rotate-45 bg-brand-flame/10" : ""

@@ -16,9 +16,8 @@ export const defaultHoursSettings = {
 } satisfies HoursSettings;
 
 export const hoursMessages = {
-  closedTodayMessage:
-    "We are closed today and not accepting orders. Follow us on Facebook for updates.",
-  closedNowMessage: "We are closed right now. See today's open hours below.",
+  closedTodayMessage: "",
+  closedNowMessage: "",
   openMessage: "We are open and accepting orders.",
 } as const;
 

@@ -7,11 +7,11 @@ export function SocialProofStrip() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 divide-x divide-stone-200 sm:grid-cols-4">
           {siteConfig.stats.map((stat) => (
-            <div key={stat.label} className="px-4 py-2 text-center first:pl-0 last:pr-0 sm:px-6">
-              <p className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
+            <div key={stat.label} className="px-3 py-2 text-center first:pl-0 last:pr-0 sm:px-6">
+              <p className="font-display text-2xl font-semibold text-foreground sm:text-3xl lg:text-4xl">
                 {stat.value}
               </p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-stone-500 sm:text-sm">
+              <p className="mt-1 text-[10px] font-semibold uppercase leading-snug tracking-wide text-stone-500 sm:text-xs lg:text-sm">
                 {stat.label}
               </p>
             </div>

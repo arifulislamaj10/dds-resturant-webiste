@@ -42,19 +42,19 @@ export function FacebookUpdates() {
             href={siteConfig.facebook.pageUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-secondary shrink-0"
+            className="btn-secondary w-full shrink-0 sm:w-auto"
           >
             See all on Facebook
           </a>
         </div>
 
-        <div className="mt-8 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="scroll-chip-row mt-8">
           {filters.map((filter) => (
             <button
               key={filter.id}
               type="button"
               onClick={() => setActiveFilter(filter.id)}
-              className={`shrink-0 rounded-full px-4 py-2 text-sm font-bold transition ${
+              className={`min-h-11 shrink-0 rounded-full px-4 py-2.5 text-sm font-bold transition ${
                 activeFilter === filter.id
                   ? "bg-brand-flame text-white"
                   : "bg-white/10 text-stone-400 hover:bg-white/15 hover:text-white"

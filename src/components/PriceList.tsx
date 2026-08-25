@@ -13,9 +13,9 @@ function PriceRow({ item }: { item: PriceListItem }) {
         href={getMessengerOrderUrl(item.name)}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex items-end gap-1 rounded-xl px-3 py-2.5 transition hover:bg-brand-muted-warm sm:px-4"
+        className="group flex flex-col gap-1 rounded-xl px-3 py-3 transition hover:bg-brand-muted-warm sm:flex-row sm:items-end sm:gap-1 sm:px-4"
       >
-        <div className="min-w-0 shrink">
+        <div className="min-w-0 flex-1 shrink">
           <div className="flex flex-wrap items-center gap-2">
             <span className="font-semibold text-foreground">{item.name}</span>
             {item.popular && (
@@ -71,16 +71,17 @@ export function PriceList() {
             <p className="section-subtitle">{priceListSettings.sectionDescription}</p>
           </div>
 
-          <div className="glass-light flex shrink-0 flex-col gap-4 rounded-3xl p-5 sm:flex-row sm:items-center sm:gap-6">
-            <div>
+          <div className="glass-light flex w-full shrink-0 flex-col gap-4 rounded-3xl p-5 sm:w-auto sm:flex-row sm:items-center sm:gap-6">
+            <div className="min-w-0">
               <p className="text-xs font-bold uppercase tracking-wider text-stone-400">
                 Hotline
               </p>
-              <p className="mt-1 font-display text-xl font-semibold text-foreground">
+              <p className="mt-1 font-display text-lg font-semibold text-foreground sm:text-xl">
                 <a href={getTelUrl(siteConfig.phone)} className="hover:text-brand-flame">
                   {siteConfig.phone}
                 </a>
-                <span className="text-stone-400"> / </span>
+              </p>
+              <p className="mt-0.5 font-display text-lg font-semibold text-foreground sm:text-xl">
                 <a href={getTelUrl(siteConfig.phoneAlt)} className="hover:text-brand-flame">
                   {siteConfig.phoneAlt}
                 </a>
@@ -90,7 +91,7 @@ export function PriceList() {
               href={getMenuOrderUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary shrink-0"
+              className="btn-primary w-full shrink-0 sm:w-auto"
             >
               Order on Messenger
             </a>

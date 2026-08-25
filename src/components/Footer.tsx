@@ -4,7 +4,7 @@ import { getMessengerOrderUrl, getTelUrl } from "@/lib/utils";
 
 export function Footer() {
   return (
-    <footer className="section-dark relative overflow-hidden pb-32 sm:pb-10">
+    <footer className="section-dark relative overflow-hidden pb-8 sm:pb-10">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-flame/50 to-transparent" />
       <div className="grain pointer-events-none absolute inset-0" />
 
@@ -32,9 +32,9 @@ export function Footer() {
               </h3>
               <ul className="mt-4 space-y-2.5 text-sm text-stone-400">
                 {[
+                  { href: "#restaurant", label: "About us" },
                   { href: "#menu", label: "Menu" },
                   { href: "#price-list", label: "Prices" },
-                  { href: "#hours", label: "Open hours" },
                   { href: "#bulk-orders", label: "Bulk orders" },
                   { href: "#faq", label: "FAQ" },
                 ].map((link) => (
