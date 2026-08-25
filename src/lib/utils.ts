@@ -5,9 +5,17 @@ export function getMessengerOrderUrl(itemName?: string) {
   if (!itemName) return base;
 
   const message = encodeURIComponent(
-    `Hi ${siteConfig.name}! I would like to order ${itemName}. Is it available today? What is the delivery time?`,
+    `Hi ${siteConfig.name}! I would like to order ${itemName}.\n\nDelivery address:\nLandmark:\nPhone:\nPayment (GCash/Maya/COD):`,
   );
   return `${base}?text=${message}`;
+}
+
+/** Tap-to-call link for mobile (Philippines numbers). */
+export function getTelUrl(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+  const normalized =
+    digits.startsWith("63") ? `+${digits}` : digits.startsWith("0") ? `+63${digits.slice(1)}` : `+63${digits}`;
+  return `tel:${normalized}`;
 }
 
 export function getStructuredData() {

@@ -1,6 +1,8 @@
+import { brand } from "@/config/brand";
+
 export const images = {
-  logo: "/logo.svg",
-  icon: "/icon.svg",
+  logo: brand.logo,
+  icon: brand.logo,
   spicyCarbonara: "/images/spicy-carbonara-with-sausage-and-fries.jpeg",
   samyangOmelette: "/images/samyang-omelette.jpeg",
   hungarianNuggets: "/images/hungarian-sausage-and-nuggets.jpeg",

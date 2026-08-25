@@ -10,6 +10,7 @@ import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Menu } from "@/components/Menu";
 import { MessengerButton } from "@/components/MessengerButton";
+import { MobileQuickActions } from "@/components/MobileQuickActions";
 import { OpeningHours } from "@/components/OpeningHours";
 import { PriceList } from "@/components/PriceList";
 import { FacebookUpdates } from "@/components/FacebookUpdates";
@@ -26,10 +27,10 @@ export default function Home() {
         <Hero />
         <SocialProofStrip />
         <OpeningHours />
+        <Menu />
         <PriceList />
         <About />
         <FacebookUpdates />
-        <Menu />
         <BulkOrders />
         <HowItWorks />
         <Delivery />
@@ -38,6 +39,7 @@ export default function Home() {
         <FAQ />
       </MainShell>
       <Footer />
+      <MobileQuickActions />
       <MessengerButton />
     </>
   );

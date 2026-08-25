@@ -2,28 +2,30 @@ import { orderSteps } from "@/config/site";
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-brand-muted py-12 sm:py-16 lg:py-20">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <section id="how-it-works" className="section-light py-14 sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold text-brand-flame">How to order</p>
-          <h2 className="mt-2 text-2xl font-bold text-brand-black sm:text-3xl lg:text-4xl">
-            4 easy steps
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-stone-600">
-            No app needed. Simple and fast.
-          </p>
+          <p className="section-label mx-auto w-fit">How to order</p>
+          <h2 className="section-title mt-3">Four simple steps</h2>
+          <p className="section-subtitle mx-auto">No app download. Just Messenger.</p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
-          {orderSteps.map((step) => (
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {orderSteps.map((step, index) => (
             <div
               key={step.step}
-              className="rounded-2xl border border-stone-200 bg-white p-5 sm:rounded-3xl sm:p-6"
+              className="surface-card relative !rounded-3xl p-6 sm:p-7"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-flame text-sm font-bold text-white sm:h-10 sm:w-10 sm:rounded-2xl">
+              {index < orderSteps.length - 1 && (
+                <span
+                  className="absolute -right-2.5 top-1/2 hidden h-px w-5 bg-stone-200 lg:block"
+                  aria-hidden="true"
+                />
+              )}
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-flame to-brand-flame-dark font-display text-lg font-semibold text-white shadow-glow">
                 {step.step}
               </span>
-              <h3 className="mt-4 text-base font-bold text-brand-black sm:text-lg">
+              <h3 className="mt-5 font-display text-xl font-semibold text-brand-black">
                 {step.title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-stone-600">
@@ -33,14 +35,17 @@ export function HowItWorks() {
           ))}
         </div>
 
-        <div className="mt-8 rounded-2xl bg-gradient-to-r from-black to-brand-flame p-5 text-center text-white sm:mt-10 sm:rounded-3xl sm:p-8">
-          <h3 className="text-lg font-bold sm:text-xl lg:text-2xl">
-            Ready to order?
-          </h3>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-stone-300 sm:text-base">
-            Tap the Order button at the bottom right of the screen. We reply
-            with price, delivery time, and payment details.
-          </p>
+        <div className="relative mt-10 overflow-hidden rounded-3xl bg-gradient-to-br from-brand-charcoal via-brand-ink to-black p-8 text-center text-white sm:p-12">
+          <div className="grain pointer-events-none absolute inset-0" />
+          <div className="relative">
+            <h3 className="font-display text-2xl font-semibold sm:text-3xl">
+              Hungry? Let&apos;s go.
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-stone-400 sm:text-base">
+              Tap the Order button. We reply with price, delivery time, and payment
+              details — usually within minutes.
+            </p>
+          </div>
         </div>
       </div>
     </section>
