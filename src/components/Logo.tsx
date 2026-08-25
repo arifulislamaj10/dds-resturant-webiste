@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { images } from "@/config/site";
 
 type LogoProps = {
   showText?: boolean;
@@ -19,16 +20,16 @@ export function Logo({ showText = true, size = "md", className = "" }: LogoProps
   return (
     <Link href="/" className={`group flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
       <Image
-        src="/images/logo.jpg"
+        src={images.logo}
         alt="DD's logo"
         width={config.icon}
         height={config.icon}
-        className="shrink-0 rounded-full ring-2 ring-white/20 transition group-hover:scale-105"
+        className="shrink-0 rounded-xl shadow-sm ring-1 ring-white/20 transition group-hover:scale-105"
         priority
       />
       {showText && (
         <div className="min-w-0">
-          <p className={`${config.text} truncate font-bold text-white`}>
+          <p className={`${config.text} truncate font-bold tracking-tight text-white`}>
             DD&apos;s
           </p>
           <p className={`${config.est} hidden text-white/70 sm:block`}>
@@ -46,16 +47,16 @@ export function LogoLight({ showText = true, size = "md", className = "" }: Logo
   return (
     <Link href="/" className={`group flex min-w-0 items-center gap-2.5 sm:gap-3 ${className}`}>
       <Image
-        src="/images/logo.jpg"
+        src={images.logo}
         alt="DD's logo"
         width={config.icon}
         height={config.icon}
-        className="shrink-0 rounded-full ring-2 ring-black/5 transition group-hover:scale-105"
+        className="shrink-0 rounded-xl shadow-sm ring-1 ring-black/5 transition group-hover:scale-105"
         priority
       />
       {showText && (
         <div className="min-w-0">
-          <p className={`${config.text} truncate font-bold text-brand-black`}>
+          <p className={`${config.text} truncate font-bold tracking-tight text-brand-black`}>
             DD&apos;s
           </p>
           <p className={`${config.est} hidden text-stone-500 sm:block`}>

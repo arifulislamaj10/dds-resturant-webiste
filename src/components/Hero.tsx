@@ -92,7 +92,7 @@ export function Hero() {
             </span>
           </div>
 
-          <h1 className="mt-2 text-2xl font-bold leading-tight sm:mt-3 sm:text-3xl lg:text-5xl">
+          <h1 className="mt-2 font-display text-2xl font-bold leading-tight sm:mt-3 sm:text-3xl lg:text-5xl">
             {slide.title}
           </h1>
 
@@ -113,7 +113,7 @@ export function Hero() {
               href={getMessengerOrderUrl(slide.orderItem)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-10 items-center justify-center rounded-full bg-brand-flame px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-flame-light sm:min-h-11 sm:px-6 sm:py-3 sm:text-base"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-brand-flame px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-flame/25 transition hover:bg-brand-flame-light hover:shadow-brand-flame/40 sm:min-h-11 sm:px-6 sm:py-3 sm:text-base"
             >
               Order this
             </a>

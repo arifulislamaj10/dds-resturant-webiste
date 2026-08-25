@@ -34,9 +34,6 @@ export type MenuItem = {
   spicy?: boolean;
 };
 
-const chaoFanImage = images.porkChopMeal;
-const comboImage = images.cheesyRicePlatter;
-
 /** Official menu — matches menu-price-list.jpg */
 export const menuCatalog: MenuItem[] = [
   {
@@ -45,7 +42,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Fried rice with shanghai rolls.",
     price: "₱80",
     category: "chaoFan",
-    image: "/images/chao-fan-shanghai.jpg",
+    image: images.lumpiangShanghaiSiomai,
   },
   {
     id: "chao-fan-siomai",
@@ -53,7 +50,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Fried rice with siomai.",
     price: "₱80",
     category: "chaoFan",
-    image: "/images/chao-fan-siomai.jpg",
+    image: images.hungarianSiomai,
   },
   {
     id: "chao-fan-longganisa",
@@ -61,7 +58,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Fried rice with longganisa.",
     price: "₱80",
     category: "chaoFan",
-    image: chaoFanImage,
+    image: images.longganisaSpam,
   },
   {
     id: "cheesy-fries",
@@ -69,7 +66,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Crispy fries topped with cheese sauce.",
     price: "₱60 / ₱100",
     category: "specialties",
-    image: images.cheesySpicyCarbonara,
+    image: images.crispyFriesNuggets,
     popular: true,
   },
   {
@@ -78,7 +75,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Spicy noodles with cheese sauce. Choose spiciness: 0%, 50%, or 100%.",
     price: "₱140",
     category: "specialties",
-    image: images.cheesySpicyCarbonara,
+    image: images.spicyCarbonara,
     popular: true,
     spicy: true,
   },
@@ -98,7 +95,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Hungarian w/ Nuggets & Egg",
     price: "₱139",
     category: "combos",
-    image: comboImage,
+    image: images.hungarianNuggets,
   },
   {
     id: "combo-2",
@@ -106,7 +103,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Longganisa w/ Korean Spam & Egg",
     price: "₱120",
     category: "combos",
-    image: comboImage,
+    image: images.longganisaSpam,
   },
   {
     id: "combo-3",
@@ -114,7 +111,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Hotdog w/ Nuggets & Egg",
     price: "₱139",
     category: "combos",
-    image: comboImage,
+    image: images.hotdogsNuggets,
   },
   {
     id: "combo-4",
@@ -122,7 +119,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Shanghai w/ Siomai & Egg",
     price: "₱129",
     category: "combos",
-    image: comboImage,
+    image: images.lumpiangShanghaiSiomai,
   },
   {
     id: "combo-5",
@@ -130,7 +127,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Hungarian w/ Siomai & Egg",
     price: "₱129",
     category: "combos",
-    image: comboImage,
+    image: images.hungarianSiomai,
   },
   {
     id: "combo-6",
@@ -138,7 +135,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Fried Chicken w/ K. Spam & Egg",
     price: "₱139",
     category: "combos",
-    image: comboImage,
+    image: images.friedChickenSpam,
   },
   {
     id: "combo-7",
@@ -146,7 +143,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Cheesy Carb w/ Hungarian & Fries",
     price: "₱239",
     category: "combos",
-    image: images.cheesySpicyCarbonara,
+    image: images.spicyCarbonara,
   },
   {
     id: "combo-8",
@@ -154,7 +151,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Cheesy Spicy Carbonara w/ Hungarian & Seaweed",
     price: "₱235",
     category: "combos",
-    image: images.cheesySpicyCarbonara,
+    image: images.spicyCarbonara,
     spicy: true,
   },
   {
@@ -163,7 +160,7 @@ export const menuCatalog: MenuItem[] = [
     description: "Cheesy Fries w/ Pepper Nuggets",
     price: "₱150",
     category: "combos",
-    image: images.cheesySpicyCarbonara,
+    image: images.crispyFriesNuggets,
   },
   {
     id: "combo-10",
@@ -189,9 +186,32 @@ export const menuCatalog: MenuItem[] = [
     description: "Chao Fan, Nuggets, Hungarian, Spam, Longganisa, Egg",
     price: "₱190",
     category: "combos",
-    image: comboImage,
+    image: images.longganisaSpam,
     popular: true,
   },
+];
+
+/** One photo card per dish — no repeated images in the menu grid */
+export const menuPhotoItemIds = [
+  "cheesy-spicy-carbonara",
+  "samyang-omelette",
+  "cheesy-fries",
+  "combo-1",
+  "combo-2",
+  "combo-3",
+  "combo-4",
+  "combo-5",
+  "combo-6",
+  "combo-11",
+] as const;
+
+export const menuPhotoItems = menuCatalog.filter((item) =>
+  menuPhotoItemIds.includes(item.id as (typeof menuPhotoItemIds)[number]),
+);
+
+export const menuPhotoCategories: { id: MenuCategory; label: string }[] = [
+  { id: "specialties", label: "Specialties" },
+  { id: "combos", label: "Combo Meals" },
 ];
 
 export const menuCategories: { id: MenuCategory; label: string }[] = [
@@ -227,10 +247,10 @@ export const priceListSettings = {
   sectionLabel: "Price list",
   sectionTitle: "Menu prices",
   sectionDescription:
-    "All prices in Philippine Peso (₱). Delivery fee is separate. Message us to confirm today's prices.",
+    "Tap any item to order on Messenger. All prices in Philippine Peso (₱). Delivery fee is separate.",
 
-  /** true = show your full menu/pricing JPEG. false = show editable text list. */
-  useMenuImage: true,
+  /** Legacy menu image — kept in public/images if you need it for printing */
+  useMenuImage: false,
 
   menuImage: "/images/menu-price-list.jpg",
   menuImageAlt: "DD's full menu and price list",

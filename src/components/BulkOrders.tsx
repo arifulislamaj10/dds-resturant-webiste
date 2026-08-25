@@ -7,8 +7,8 @@ export function BulkOrders() {
     <section id="bulk-orders" className="bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold text-brand-flame">Bulk orders</p>
-          <h2 className="mt-2 text-2xl font-bold text-brand-black sm:text-3xl lg:text-4xl">
+          <p className="section-label">Bulk orders</p>
+          <h2 className="section-title mt-2">
             For parties, offices, and family events
           </h2>
           <p className="mt-3 text-base leading-relaxed text-stone-600">
@@ -25,7 +25,7 @@ export function BulkOrders() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Message about bulk order: ${order.title}`}
-              className="block overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.99] sm:rounded-3xl"
+              className="block overflow-hidden rounded-2xl border border-stone-200/80 bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-premium active:scale-[0.99] sm:rounded-3xl"
             >
               <div className="relative aspect-[16/10]">
                 <Image

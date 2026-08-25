@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #faf8f5;
   --foreground: #0a0a0a;
-  --brand-black: #000000;
+  --brand-black: #0a0a0a;
   --brand-white: #ffffff;
-  --brand-flame: #ff4500;
-  --brand-flame-dark: #e03e00;
-  --brand-flame-light: #ff6b35;
-  --brand-muted: #f7f7f7;
-  --brand-muted-warm: #fff5f0;
+  --brand-flame: #e85d04;
+  --brand-flame-dark: #c44d03;
+  --brand-flame-light: #ff7b29;
+  --brand-muted: #f3f0eb;
+  --brand-muted-warm: #fff5ee;
+  --brand-cream: #faf8f5;
+  --brand-charcoal: #1a1a1a;
 }
 
 @theme inline {
@@ -22,7 +24,12 @@
   --color-brand-flame-light: var(--brand-flame-light);
   --color-brand-muted: var(--brand-muted);
   --color-brand-muted-warm: var(--brand-muted-warm);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --font-sans: var(--font-dm-sans), system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --shadow-premium: 0 20px 50px -12px rgb(0 0 0 / 0.18);
+  --shadow-card: 0 4px 24px -4px rgb(0 0 0 / 0.08);
 }
 
 html {
@@ -33,7 +40,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
@@ -41,10 +48,40 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
 ::selection {
-  background: #ff4500;
+  background: var(--brand-flame);
   color: #ffffff;
+}
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand-flame);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--brand-black);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.shadow-premium {
+  box-shadow: var(--shadow-premium);
+}
+
+.shadow-card {
+  box-shadow: var(--shadow-card);
 }

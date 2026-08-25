@@ -8,25 +8,25 @@ export function About() {
         <div className="relative order-2 lg:order-1">
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <Image
-              src={images.dynamiteLumpia}
-              alt="Dynamite lumpia"
+              src={images.spicyCarbonara}
+              alt="Cheesy Spicy Carbonara"
               width={600}
               height={750}
-              className="aspect-[4/5] w-full rounded-2xl object-cover shadow-md ring-1 ring-black/5 sm:rounded-3xl"
+              className="aspect-[4/5] w-full rounded-2xl object-cover shadow-premium ring-1 ring-black/5 sm:rounded-3xl"
             />
             <Image
-              src={images.dynamiteTray}
-              alt="Dynamite party tray"
+              src={images.samyangOmelette}
+              alt="Samyang Omelette"
               width={600}
               height={750}
-              className="mt-6 aspect-[4/5] w-full rounded-2xl object-cover shadow-md ring-1 ring-black/5 sm:mt-8 sm:rounded-3xl"
+              className="mt-6 aspect-[4/5] w-full rounded-2xl object-cover shadow-premium ring-1 ring-black/5 sm:mt-8 sm:rounded-3xl"
             />
           </div>
         </div>
 
         <div className="order-1 lg:order-2">
-          <p className="text-sm font-semibold text-brand-flame">About DD&apos;s</p>
-          <h2 className="mt-2 text-2xl font-bold text-brand-black sm:text-3xl lg:text-4xl">
+          <p className="section-label">About DD&apos;s</p>
+          <h2 className="section-title mt-2">
             Home cooking since 2018
           </h2>
           <p className="mt-4 text-base leading-relaxed text-stone-600 sm:text-lg">
@@ -48,7 +48,7 @@ export function About() {
               "Home cooking since 2018",
             ].map((item) => (
               <li key={item} className="flex items-start gap-3 text-sm text-stone-700 sm:text-base">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-flame/10 text-xs text-brand-flame">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-flame/10 text-xs font-bold text-brand-flame">
                   ✓
                 </span>
                 <span>{item}</span>
